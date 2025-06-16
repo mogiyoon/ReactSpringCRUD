@@ -1,0 +1,4 @@
+*.DS_Store
+/back_end\(spring\)/src/main/resources/application.properties
+/front_end\(react\)/node_modules/
+/front_end\(react\)/.next/
