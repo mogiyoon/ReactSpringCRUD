@@ -7,6 +7,7 @@ import {
   Typography,
 } from "@material-tailwind/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import Link from "next/link";
 
 interface NavItemProps {
   children: React.ReactNode;
@@ -82,9 +83,14 @@ export function Navbar() {
           </NavItem>
         </ul>
         <div className="hidden items-center lg:flex gap-2">
-          <Button variant="text" color={isScrolling ? "gray" : "white"}>
-            Log in
-          </Button>
+          <Link href="/login">
+            <Button
+              variant="text" 
+              color={isScrolling ? "gray" : "white"}
+            >
+              Log in
+            </Button>
+          </Link>
           <a href="https://www.material-tailwind.com/blocks" target="_blank">
             <Button color={isScrolling ? "gray" : "white"}>Blocks</Button>
           </a>

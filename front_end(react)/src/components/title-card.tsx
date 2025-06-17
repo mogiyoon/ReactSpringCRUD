@@ -10,10 +10,11 @@ import { ArrowRightIcon } from "@heroicons/react/24/outline";
 
 export interface Post {
   title: string;
-  desc: string;
+  contents: string;
+  id?: number;
 }
 
-export function TitleCard({ title, desc }: Post) {
+export function TitleCard({ id, title, contents }: Post) {
   return (
     <Card color="transparent" shadow={false}>
       <CardBody className="p-0">
@@ -26,7 +27,10 @@ export function TitleCard({ title, desc }: Post) {
           </Typography>
         </a>
         <Typography className="mb-3 font-normal !text-gray-500">
-          {desc}
+          {contents}
+        </Typography>
+        <Typography className="mb-3 font-normal !text-gray-500">
+          {id}
         </Typography>
         <Button variant="text" color="gray" className="flex items-center gap-2">
           read more

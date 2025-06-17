@@ -3,17 +3,17 @@
 import React, { useEffect, useState } from "react";
 import { Typography } from "@material-tailwind/react";
 import TitleCard, {Post} from "@/components/title-card";
-import { fetchPosts } from "@/services/postService";
+import { fetchGetPosts } from "@/services/post-service";
 
 export function LatestBlogPosts() {
   const [posts, setPosts] = useState<Post[]>([]);
 
   useEffect(() => {
-    fetchPosts().then(setPosts).catch(console.error);
+    fetchGetPosts().then(setPosts).catch(console.error);
   }, [])
 
   return (
-    <section className="py-40 px-8">
+    <section className="py-20 px-8">
       <div className="container mx-auto mb-12">
         <Typography variant="h3" color="blue-gray">
           Check my latest blog posts
