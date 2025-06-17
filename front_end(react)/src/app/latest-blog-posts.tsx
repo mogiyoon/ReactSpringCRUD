@@ -2,7 +2,8 @@
 
 import React, { useEffect, useState } from "react";
 import { Typography } from "@material-tailwind/react";
-import TitleCard, {Post} from "@/components/title-card";
+import TitleCard from "@/components/title-card";
+import { Post } from "@/model/post-model";
 import { fetchGetPosts } from "@/services/post-service";
 
 export function LatestBlogPosts() {

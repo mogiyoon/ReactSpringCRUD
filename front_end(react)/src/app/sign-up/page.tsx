@@ -1,9 +1,26 @@
 "use client";
 
+import { Userinfo } from "@/model/userinfo-model";
+import { fetchCreateUserinfo } from "@/services/userinfo-service";
 import Link from "next/link";
-import React from "react";
+import { useRouter } from "next/navigation";
+import React, { useState } from "react";
 
 export default function Register() {
+  const router = useRouter();
+  const [userinfo, setUserinfo] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: ""
+  });
+  let userinfoRes: Userinfo;
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setUserinfo((prev) => ({ ...prev, [name]: value }));
+  };
+
   return (
     <div className="min-w-screen min-h-screen bg-gray-900 flex items-center justify-center px-5 py-5">
       <div
@@ -28,7 +45,10 @@ export default function Register() {
                     </div>
                     <input
                       type="text"
+                      name="firstName"
                       className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
+                      value={userinfo.firstName}
+                      onChange={handleChange}
                     />
                   </div>
                 </div>
@@ -41,7 +61,10 @@ export default function Register() {
                     </div>
                     <input
                       type="text"
+                      name="lastName"
                       className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
+                      value={userinfo.lastName}
+                      onChange={handleChange}
                     />
                   </div>
                 </div>
@@ -56,8 +79,11 @@ export default function Register() {
                     </div>
                     <input
                       type="email"
+                      name="email"
                       className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
                       placeholder="@example.com"
+                      value={userinfo.email}
+                      onChange={handleChange}
                     />
                   </div>
                 </div>
@@ -72,8 +98,11 @@ export default function Register() {
                     </div>
                     <input
                       type="password"
+                      name="password"
                       className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
                       placeholder="********"
+                      value={userinfo.password}
+                      onChange={handleChange}
                     />
                   </div>
                 </div>
@@ -82,8 +111,18 @@ export default function Register() {
               <div className="flex -mx-3">
                 <div className="w-full px-3 mb-5">
                   <button
-                    type="submit"
+                    type="button"
                     className="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold"
+                    onClick={async () => {
+                      if (userinfo.firstName === "" || userinfo.lastName === "" || userinfo.email === "" || userinfo.password === "") {
+                        alert("No Info");
+                        return;
+                      }
+                      userinfoRes = await fetchCreateUserinfo(userinfo);
+                      if (userinfoRes.email === userinfo.email) {
+                        router.push("/login")
+                      }
+                    }}
                   >
                     REGISTER NOW
                   </button>

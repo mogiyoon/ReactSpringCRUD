@@ -1,9 +1,8 @@
 import axios from 'axios';
-import {Post} from '../components/title-card';
+import { Post } from "@/model/post-model";
 
 export const fetchGetPosts = async (): Promise<Post[]> => {
   const response = await axios.get<Post[]>('http://localhost:8080/posts');
-  console.log("response: ", response);
   return response.data
 }
 

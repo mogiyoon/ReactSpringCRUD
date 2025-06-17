@@ -7,12 +7,7 @@ import {
 } from "@material-tailwind/react";
 
 import { ArrowRightIcon } from "@heroicons/react/24/outline";
-
-export interface Post {
-  title: string;
-  contents: string;
-  id?: number;
-}
+import { Post } from "@/model/post-model";
 
 export function TitleCard({ id, title, contents }: Post) {
   return (

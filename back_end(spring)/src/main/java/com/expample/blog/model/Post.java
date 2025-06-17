@@ -1,29 +1,38 @@
 package com.expample.blog.model;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "posts")
 public class Post {
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     private String title;
-    private String desc;
+    private String contents;
 
     public Post() {}
 
-    public Post(String title, String desc) {
+    public Post(String title, String contents) {
         setTitle(title);
-        setDesc(desc);
+        setContents(contents);
     }
 
     public void setTitle(String title) {
         this.title = title;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
+    public void setContents(String contents) {
+        this.contents = contents;
     }
 
     public String getTitle() {
         return title;
     }
 
-    public String getDesc() {
-        return desc;
+    public String getContents() {
+        return contents;
     }
+
+    public Long getId() { return id; }
 }
