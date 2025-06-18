@@ -1,23 +1,35 @@
+"use client"
+
+import { fetchLogin } from "@/services/loginInfo-service";
 import Link from "next/link";
 
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+
 export default function Login() {
+  const router = useRouter();
+  const [loginInfo, setLoginInfo] = useState({
+    email: "",
+    password: ""
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setLoginInfo((prev) => ({ ...prev, [name]: value }));
+  };
+
+
   return (
     <>
-      {/*
-        This example requires updating your template:
-
-        ```
-        <html class="h-full bg-white">
-        <body class="h-full">
-        ```
-      */}
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <img
-            alt="Your Company"
-            src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600"
-            className="mx-auto h-10 w-auto"
-          />
+          <Link href="/">
+            <img
+              alt="Your Company"
+              src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600"
+              className="mx-auto h-10 w-auto"
+            />
+          </Link>
           <h2 className="mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-900">
             Sign in to your account
           </h2>
@@ -36,6 +48,8 @@ export default function Login() {
                   type="email"
                   required
                   autoComplete="email"
+                  value={loginInfo.email}
+                  onChange={handleChange}
                   className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6 border-2"
                 />
               </div>
@@ -59,6 +73,8 @@ export default function Login() {
                   type="password"
                   required
                   autoComplete="current-password"
+                  value={loginInfo.password}
+                  onChange={handleChange}
                   className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6 border-2"
                 />
               </div>
@@ -66,8 +82,15 @@ export default function Login() {
 
             <div>
               <button
-                type="submit"
+                type="button"
                 className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                onClick={async () => {
+                  if (loginInfo.email === "" || loginInfo.password === "") {
+                    alert("No Info");
+                    return;
+                  }
+                  await fetchLogin(loginInfo);
+                }}
               >
                 Sign in
               </button>

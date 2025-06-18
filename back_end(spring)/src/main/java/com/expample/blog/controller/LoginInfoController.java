@@ -14,8 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/login")
-@CrossOrigin(origins = "*")
+@RequestMapping("/api/login")
 public class LoginInfoController {
     private static final Logger log = LoggerFactory.getLogger(LoginInfoController.class);
 
@@ -30,7 +29,7 @@ public class LoginInfoController {
     @PostMapping
     public ResponseEntity<?> login(@RequestBody LoginInfo req) {
         Userinfo user = repo.findByEmail(req.getEmail());
-        if (user != null && userServ.matches(req.getPassword(), user.getPassword())) {
+        if (user != null && userServ.matchesPassword(req.getPassword(), user.getPassword())) {
             String jwt = JwtUtil.generateToken(user.getEmail());
             return ResponseEntity.ok(Map.of("token", jwt));
         } else {
