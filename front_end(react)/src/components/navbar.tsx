@@ -8,6 +8,7 @@ import {
 } from "@material-tailwind/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
+import { useAuth } from "@/context/AuthContext";
 
 interface NavItemProps {
   children: React.ReactNode;
@@ -32,6 +33,7 @@ function NavItem({ children, href }: NavItemProps) {
 export function Navbar() {
   const [open, setOpen] = React.useState(false);
   const [isScrolling, setIsScrolling] = React.useState(false);
+  const { isLoggedIn, isLoading, userEmail, logout } = useAuth();
 
   function handleOpen() {
     setOpen((cur) => !cur);
@@ -82,19 +84,41 @@ export function Navbar() {
             Docs
           </NavItem>
         </ul>
-        <div className="hidden items-center lg:flex gap-2">
-          <Link href="/login">
-            <Button
-              variant="text" 
-              color={isScrolling ? "gray" : "white"}
-            >
-              Log in
-            </Button>
-          </Link>
-          <a href="https://www.material-tailwind.com/blocks" target="_blank">
-            <Button color={isScrolling ? "gray" : "white"}>Blocks</Button>
-          </a>
-        </div>
+        
+        {isLoggedIn ? (
+            // 로그인 상태일 때: 사용자 이메일 표시 및 로그아웃 버튼
+            <>
+              <span className={`text-base ${isScrolling ? "text-gray-700" : "text-white"}`}>
+                환영합니다, **{userEmail || '사용자'}**님!
+              </span>
+              <Button
+                variant="text"
+                color={isScrolling ? "gray" : "white"}
+                onClick={logout} // 로그아웃 함수 호출
+              >
+                Log out
+              </Button>
+            </>
+          ) : (
+            // 로그아웃 상태일 때: 로그인 및 회원가입 버튼
+            <>
+              <Link href="/login">
+                <Button
+                  variant="text"
+                  color={isScrolling ? "gray" : "white"}
+                >
+                  Log in
+                </Button>
+              </Link>
+              {/* Blocks 버튼은 회원가입/다른 기능 버튼으로 대체할 수 있습니다. */}
+              <Link href="/signup"> {/* 예시: 회원가입 페이지 링크 */}
+                <Button color={isScrolling ? "gray" : "white"}>
+                  Sign Up
+                </Button>
+              </Link>
+            </>
+          )}
+
         <IconButton
           variant="text"
           color="white"

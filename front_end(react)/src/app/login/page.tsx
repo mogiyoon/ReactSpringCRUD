@@ -89,7 +89,10 @@ export default function Login() {
                     alert("No Info");
                     return;
                   }
-                  await fetchLogin(loginInfo);
+                  let result = await fetchLogin(loginInfo);
+                  if (result === "Login Success") {
+                    router.push("/")
+                  }
                 }}
               >
                 Sign in

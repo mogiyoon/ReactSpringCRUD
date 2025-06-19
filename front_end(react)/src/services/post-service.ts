@@ -7,6 +7,6 @@ export const fetchGetPosts = async (): Promise<Post[]> => {
 }
 
 export const fetchCreatePost = async (newPost: Post): Promise<Post> => {
-  const response = await axios.post<Post>('http://localhost:8080/api/posts', newPost);
+  const response = await axios.post<Post>('http://localhost:8080/api/posts', newPost, {withCredentials: true});
   return response.data;
 };
